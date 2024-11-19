@@ -7,7 +7,7 @@ This microservice is designed to log appointments that the main program sends to
 ### How to REQUEST data (log appointment)
 Send a POST '/' request to the microservice
 
-Default port for microservice is defined as `http://localhost:3001/`, but this is TBD by user.
+Default port for microservice is defined as `http://localhost:3001/`.
 
 The request body must follow the format:
 ```
@@ -23,7 +23,7 @@ The request body must follow the format:
 
 Example call:
 ```
-const validData = {
+const validData = {                                 // Example request body
         "user_id": "user123",
         "appointment": {
             "date": "2024-12-25",
@@ -32,17 +32,21 @@ const validData = {
         }
     };
 
-const response = await axios.post(MICROSERVICE_URL, validData);
+try {
+    const response = await axios.post(MICROSERVICE_URL, validData);     // Example call
+} catch (error) {
+    // Error handling here
+}
 ```
 
-### How to RECEIVE data (status of appointment log attempt, notification)
+### How to RECEIVE data
 
 The microservice will automatically send JSON response objects to the main program when stored appointments reach the 24 hour window, acting as a notification system.
 The microservice will also send back status messages on attempts to log appointments.
 
 Default port for the main program is defined as `http://localhost:3000/`, and the microservice will POST the notifications to the main program at `http://localhost:3000/receive-notification`.
 
-The main program must include the following endpoint (at POST `/receive-notification`) to receive notifications from the microservice:
+The main program must have an endpoint (in my example, it is at POST `/receive-notification`) to receive notifications from the microservice:
 ```
 app.post('/receive-notification', (req, res) => {
     console.log('Main service received notification:', req.body);
@@ -51,10 +55,7 @@ app.post('/receive-notification', (req, res) => {
 });
 ```
 
-The body of the JSON request object sent by the microservice contains the notification/alert that is to be displayed by the main program. This JSON object will include:
-* Status (success/error) and status message
-* Appointment details: user id, date, time, vet name
-
+#### Status Message
 Example valid response body (sent by microservice):
 ```
 {
@@ -77,6 +78,11 @@ Example invalid response body (sent by microservice):
 }
 ```
 
+#### Notification
+The body of the JSON request object sent by the microservice contains the notification that is to be displayed by the main program. This JSON object will include:
+* Status (success/error) and status message
+* Appointment details: user id, date, time, vet name
+
 Example notification (request body, automatically sent by microservice to the main program):
 ```
 {
@@ -86,3 +92,6 @@ Example notification (request body, automatically sent by microservice to the ma
     appointment_details: { date: '2024-11-20', time: '13:00', vet_name: 'Dr. Jane Doe' }
 }
 ```
+
+## UML Sequence Diagram
+![alt text](./UMLsequence.png)
