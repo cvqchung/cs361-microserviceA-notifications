@@ -1,12 +1,11 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const axios = require('axios');
 
 const app = express();
 const MAIN_SERVICE_PORT = 3000;
 const MICROSERVICE_URL = 'http://localhost:3001/';
 
-app.use(bodyParser.json());
+app.use(express.json());
 
 // Main service endpoint to receive notifications from microservice
 app.post('/receive-notification', (req, res) => {

@@ -1,12 +1,11 @@
 const express = require('express');
-const bodyParser = require('body-parser');
 const axios = require('axios');
 
 const app = express();
 const PORT = 3001;
 const MAIN_PROGRAM_URL = 'http://localhost:3000/receive-notification'; // Replace with actual main program endpoint
 
-app.use(bodyParser.json());
+app.use(express.json());
 
 // Storage for appointments
 const appointments = [];
