@@ -57,7 +57,7 @@ async function testInvalidRequest() {
     const invalidData = {
         "user_id": "user123",
         "appointment": {
-            "date": "2024-11-18",
+            "date": "2020-11-10",
             "time": "12:00",
             "vet_name": "Dr. Jane Doe"
         }

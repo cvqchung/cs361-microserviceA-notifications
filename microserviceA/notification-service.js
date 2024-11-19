@@ -78,7 +78,7 @@ app.post('/', (req, res) => {
         appointments.push(newAppointment);
         res.status(200).json({
             status: 'success',
-            message: 'Notification logged successfully',
+            message: 'Appointment logged successfully',
             appointment_details: { user_id, ...appointment }
         });
 
